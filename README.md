@@ -1,9 +1,13 @@
-# Anki Random Substitution Card Types
+# Anki Card Templates
 
-These cards types are handy for adding a bit of variation into your sentence structure studies.  
+This is my collection of custom Anki card templates.
+
+## Random Substitution Card Templates
+
+These cards templates are handy for adding a bit of variation into your sentence structure studies.  
 Instead of learning the same fixed example sentence every time, these card types challenge you to understand and translate a general structure and even cycle through some vocabulary as well.
 
-## Random Substitutions (optional reversed)
+### Random Substitutions (optional reversed)
 
 This card type allows you to create a card with placeholders that are substituted with a random values from given lists for each substitution slot.
 
@@ -12,13 +16,13 @@ Each substitution value is picked separately and randomly.
 The code can be used for cards with reversed cards and cards without.
 If a reversed card is desired, make sure it is named "Reverse".
 
-### Usage
+#### Usage
 
 * In the text field for the "Front" card, you can write `[[n]]` to create a placeholder, where `n` is a number starting from 0
 * In the "Options" field, write all possible substitutions for placeholder `n` on line `n`, separated by a `|`
 * The "Back" card and "Answers" fields work analogously.
 
-### Example
+#### Example
 
 ```
 Front
@@ -39,13 +43,13 @@ The resulting sentence will be a random one of these:
 * The creature is big and smelly.
 
 
-## Random Fixed Substitutions (optional reversed)
+### Random Fixed Substitutions (optional reversed)
 
 This card type works almost like [Basic Random Substitutions](#basic-random-substitutions), except all the substitutions are chosen together.
 
 This can be useful if the different substitutions are related to each other.
 
-### Example
+#### Example
 
 ```
 Front
