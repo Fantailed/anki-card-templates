@@ -1,0 +1,37 @@
+<!-- Grab Field Variables -->
+<div class="hidden">
+  <div id="front">{{Front}}</div>
+  <div id="back">{{Back}}</div>
+  <div id="options">{{Options}}</div>
+  <div id="answers">{{Answers}}</div>
+</div>
+
+<div id="output"></div>
+<div id="debug"></div>
+
+<script>
+  (() => {
+    const enableDebugOutput = true;
+    let debugOutput = '\n--- DEBUG ---\n';
+    const debug = (text) => {
+      if (enableDebugOutput) {
+        debugOutput += text + '\n';
+        document.getElementById("debug").innerText = debugOutput + '-------------\n';
+      }
+    }
+
+    const backTemplate = document.getElementById("back").innerHTML;
+
+    const answers = document.getElementById("answers").innerHTML.split('<br>').map((row) => row.split('|'));
+    debug(`Answers: ${JSON.stringify(answers)}`);
+
+    choice_indices = JSON.parse(localStorage.getItem("choice_indices"));
+    debug(`Indices: ${JSON.stringify(choice_indices)}`);
+
+    document.getElementById("output").innerHTML = backTemplate.replace(/\[\[(\d+)\]\]/g, (_, match) => {
+        const idx = parseInt(match);
+        return answers[idx][choice_indices[idx]];
+      })
+
+  })()
+</script>
