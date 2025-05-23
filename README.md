@@ -3,11 +3,14 @@
 These cards types are handy for adding a bit of variation into your sentence structure studies.  
 Instead of learning the same fixed example sentence every time, these card types challenge you to understand and translate a general structure and even cycle through some vocabulary as well.
 
-## Basic Random Substitutions
+## Random Substitutions (optional reversed)
 
 This card type allows you to create a card with placeholders that are substituted with a random values from given lists for each substitution slot.
 
 Each substitution value is picked separately and randomly.
+
+The code can be used for cards with reversed cards and cards without.
+If a reversed card is desired, make sure it is named "Reverse".
 
 ### Usage
 
@@ -36,7 +39,7 @@ The resulting sentence will be a random one of these:
 * The creature is big and smelly.
 
 
-## Basic Random Fixed Substitutions
+## Random Fixed Substitutions (optional reversed)
 
 This card type works almost like [Basic Random Substitutions](#basic-random-substitutions), except all the substitutions are chosen together.
 

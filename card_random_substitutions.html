@@ -1,0 +1,79 @@
+<!-- Page -->
+<div id="question-output"></div>
+<hr id="answer">
+<div id="answer-output"></div>
+
+<pre id="debug"></pre>
+
+<!-- Grab Field Variables -->
+<div style="display:none">
+  <div id="front">{{Front}}</div>
+  <div id="back">{{Back}}</div>
+  <div id="options">{{Options}}</div>
+  <div id="answers">{{Answers}}</div>
+  <div id="frontside">{{FrontSide}}</div>
+  <div id="card">{{Card}}</div>
+</div>
+
+<script>
+  (() => {
+    // Debug Setup
+    const enableDebugOutput = true;
+    let debugOutput = '\n---------- DEBUG ----------\n';
+    const debug = (...inputs) => {
+      if (enableDebugOutput) {
+        inputs.forEach((input) => {
+          text = typeof input === 'string' ? input : JSON.stringify(input, null, 2);
+          debugOutput += text + '\n';
+        })
+        document.getElementById("debug").innerText = debugOutput;
+      }
+    }
+
+    // Parse current card settings and fields
+    const isFront = document.getElementById("frontside").innerText === ""; // FrontSide field is only valid in back template
+    const isReverse = document.getElementById("card").innerText === "Reverse";
+
+    let frontTemplate = document.getElementById("front").innerHTML;
+    let backTemplate = document.getElementById("back").innerHTML;
+
+    let options = document.getElementById("options").innerHTML.split('<br>').map((row) => row.split('|'));
+    let answers = document.getElementById("answers").innerHTML.split('<br>').map((row) => row.split('|'));
+
+    if (isReverse) {
+      [frontTemplate, backTemplate] = [backTemplate, frontTemplate];
+      [options, answers] = [answers, options];
+    }
+
+    debug({frontTemplate});
+
+    // Randomly pick/load substitution choices
+    let choice_indices = [];
+
+    if (isFront) {
+      const randInt = (max) => Math.floor(Math.random() * max);
+      choice_indices = options.map(row => randInt(row.length));
+
+      localStorage.setItem("choice_indices", JSON.stringify(choice_indices));
+    } else {
+      choice_indices = JSON.parse(localStorage.getItem("choice_indices"));
+    }
+
+    debug({options, answers, isFront, isReverse, choice_indices});
+
+    // Render output
+    const substitute = (template, substitutions) => {
+      return template.replace(/\[\[(\d+)\]\]/g, (_, match) => {
+        const idx = parseInt(match);
+        return substitutions[idx][choice_indices[idx]];
+      });
+    };
+
+    document.getElementById("question-output").innerHTML = substitute(frontTemplate, options);
+
+    if (!isFront) {
+      document.getElementById("answer-output").innerHTML = substitute(backTemplate, answers);
+    }
+
+  })()
+</script>
